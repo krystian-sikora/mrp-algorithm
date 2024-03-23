@@ -1,0 +1,36 @@
+{
+    "dron" : {
+        "czas_realizacji": 1,
+            "dostępne": 5,
+        "kadłub" : {
+            "ilość": 1,
+            "czas_realizacji": 3,
+            "wielkość_partii": 10,
+            "dostępne": 3,
+            "bateria": {
+                "ilość": 2,
+                "czas_realizacji": 2,
+                "wielkość_partii": 30,
+                "dostępne": 12
+            },
+            "kamera": {
+                "ilość": 1,
+                "czas_realizacji": 2,
+                "wielkość_partii": 3,
+                "dostępne": 3
+            },
+            "obudowa": {
+                "ilość": 1,
+                "czas_realizacji": 2,
+                "wielkość_partii": 40,
+                "dostępne": 22
+            }
+        },
+        "śmigła": {
+            "ilość": 4,
+            "czas_realizacji": 1,
+            "wielkość_partii": 50,
+            "availible": 30
+        }
+    }
+}
