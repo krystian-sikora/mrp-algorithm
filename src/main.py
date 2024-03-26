@@ -1,44 +1,44 @@
 import pandas as pd
-import ghp, mrp, bom
+import mps, mrp, bom
 
-# GHP dron
-bom_dron = bom.Bom().bom["dron"]
-ghp_dron = ghp.Ghp(bom_dron)
-dronDf = pd.DataFrame(ghp_dron.tabela)
-print("TABELA GHP")
-print(dronDf)
+# GHP drone
+bom_drone = bom.Bom().bom["drone"]
+ghp_drone = mps.Mps(bom_drone)
+droneDf = pd.DataFrame(ghp_drone.table)
+print("GHP TABLE drone")
+print(droneDf)
 
-# MRP kadłub
-bom_kadlub = bom.Bom().bom["dron"]["kadłub"]
-mrp_kadlub = mrp.Mrp(bom_kadlub, ghp_dron)
-kadlubDf = pd.DataFrame(mrp_kadlub.tabela)
-print("TABELA MRP kadłub")
-print(kadlubDf)
+# MRP body
+bom_body = bom.Bom().bom["drone"]["body"]
+mrp_body = mrp.Mrp(bom_body, ghp_drone)
+bodyDf = pd.DataFrame(mrp_body.table)
+print("MRP TABLE body")
+print(bodyDf)
 
-# MRP bateria
-bom_bateria = bom.Bom().bom["dron"]["kadłub"]["bateria"]
-mrp_bateria = mrp.Mrp(bom_bateria, mrp_kadlub)
-bateriaDf = pd.DataFrame(mrp_bateria.tabela)
-print("TABELA MRP bateria")
-print(bateriaDf)
+# MRP battery
+bom_battery = bom.Bom().bom["drone"]["body"]["battery"]
+mrp_battery = mrp.Mrp(bom_battery, mrp_body)
+batteryDf = pd.DataFrame(mrp_battery.table)
+print("MRP TABLE battery")
+print(batteryDf)
 
-# MRP silnik
-bom_silnik = bom.Bom().bom["dron"]["kadłub"]["silnik"]
-mrp_silnik = mrp.Mrp(bom_silnik, mrp_kadlub)
-silnikDf = pd.DataFrame(mrp_silnik.tabela)
-print("TABELA MRP silnik")
-print(silnikDf)
+# MRP motor
+bom_motor = bom.Bom().bom["drone"]["body"]["motor"]
+mrp_motor = mrp.Mrp(bom_motor, mrp_body)
+motorDf = pd.DataFrame(mrp_motor.table)
+print("MRP TABLE motor")
+print(motorDf)
 
-# MRP obudowa
-bom_obudowa = bom.Bom().bom["dron"]["kadłub"]["obudowa"]
-mrp_obudowa = mrp.Mrp(bom_obudowa, mrp_kadlub)
-obudowaDf = pd.DataFrame(mrp_obudowa.tabela)
-print("TABELA MRP obudowa")
-print(obudowaDf)
+# MRP case
+bom_case = bom.Bom().bom["drone"]["body"]["case"]
+mrp_case = mrp.Mrp(bom_case, mrp_body)
+caseDf = pd.DataFrame(mrp_case.table)
+print("MRP TABLE case")
+print(caseDf)
 
-# MRP śmigła
-bom_smigla = bom.Bom().bom["dron"]["śmigła"]
-mrp_smigla = mrp.Mrp(bom_smigla, ghp_dron)
-smiglaDf = pd.DataFrame(mrp_smigla.tabela)
-print("TABELA MRP śmigła")
-print(smiglaDf)
+# MRP propellers
+bom_propellers = bom.Bom().bom["drone"]["propellers"]
+mrp_propellers = mrp.Mrp(bom_propellers, ghp_drone)
+propellersDf = pd.DataFrame(mrp_propellers.table)
+print("MRP TABLE propellers")
+print(propellersDf)

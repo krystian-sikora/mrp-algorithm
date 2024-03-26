@@ -1,49 +1,48 @@
-
-
+# Material Requirements Planning (MRP) class
 class Mrp:
     def __init__(self, bom, parent):
         self.bom = bom
         self.parent = parent
         self.is_ghp = self.is_parent_ghp(parent)
-        self.rozmiar_tabeli = 10
-        self.tabela = {
-            "okres" : [x for x in range(1, self.rozmiar_tabeli)],
-            "całkowite_zapotrzebowanie" : [0 for x in range(1, self.rozmiar_tabeli)],
-            "planowane_przyjęcia" : [0 for x in range(1, self.rozmiar_tabeli)],
-            "przewidywane_na_stanie" : [0 for x in range(1, self.rozmiar_tabeli)],
-            "zapotrzebowanie_netto" : [0 for x in range(1, self.rozmiar_tabeli)],
-            "planowane_zamówienia" : [0 for x in range(1, self.rozmiar_tabeli)],
-            "planowane_przyjęcia_zamówień" : [0 for x in range(1, self.rozmiar_tabeli)]
+        self.table_size = 10
+        self.table = {
+            "week" : [x for x in range(1, self.table_size)],
+            "total_demand" : [0 for x in range(1, self.table_size)],
+            "scheduled_admissions" : [0 for x in range(1, self.table_size)],
+            "stock_prediction" : [0 for x in range(1, self.table_size)],
+            "net_demand" : [0 for x in range(1, self.table_size)],
+            "planned_orders" : [0 for x in range(1, self.table_size)],
+            "scheduled_order_admissions" : [0 for x in range(1, self.table_size)]
         }
-        self.oblicz_mrp()
+        self.calculate_mrp()
 
-    def oblicz_mrp(self):
-        self.oblicz_zapotrzebowanie()
-        self.oblicz_przewidywane_na_stanie()
+    def calculate_mrp(self):
+        self.calculate_demand()
+        self.calculate_stock()
 
-    def oblicz_zapotrzebowanie(self):
-        for i in range(1, self.rozmiar_tabeli - 1):
+    def calculate_demand(self):
+        for i in range(1, self.table_size - 1):
             if self.is_ghp:
-                produkcja = self.parent.tabela["produkcja"][i]
+                production = self.parent.table["production"][i]
             else:
-                produkcja = self.parent.tabela["planowane_zamówienia"][i]
+                production = self.parent.table["planned_orders"][i]
 
-            self.tabela["całkowite_zapotrzebowanie"][i - self.parent.bom["czas_realizacji"]] = produkcja
+            self.table["total_demand"][i - self.parent.bom["lead_time"]] = production
     
-    def oblicz_przewidywane_na_stanie(self):
-        self.tabela["przewidywane_na_stanie"][0] = self.bom["dostępne"]
-        for i in range(1, self.rozmiar_tabeli - 1):
-            self.tabela["przewidywane_na_stanie"][i] = self.tabela["przewidywane_na_stanie"][i-1] - self.tabela["całkowite_zapotrzebowanie"][i]
-            if self.tabela["przewidywane_na_stanie"][i] < 0:
-                self.tabela["zapotrzebowanie_netto"][i] = abs(self.tabela["przewidywane_na_stanie"][i])
-                if i - self.bom["czas_realizacji"] < 0:
-                    print("nie można zamawiać na datę wstecz")
-                self.tabela["planowane_zamówienia"][i - self.bom["czas_realizacji"]] = self.bom["wielkość_partii"]
-                self.tabela["planowane_przyjęcia_zamówień"][i] = self.bom["wielkość_partii"]
-                self.tabela["przewidywane_na_stanie"][i] = self.tabela["przewidywane_na_stanie"][i] + self.tabela["planowane_przyjęcia_zamówień"][i]
+    def calculate_stock(self):
+        self.table["stock_prediction"][0] = self.bom["available"]
+        for i in range(1, self.table_size - 1):
+            self.table["stock_prediction"][i] = self.table["stock_prediction"][i-1] - self.table["total_demand"][i]
+            if self.table["stock_prediction"][i] < 0:
+                self.table["net_demand"][i] = abs(self.table["stock_prediction"][i])
+                if i - self.bom["lead_time"] < 0:
+                    print("Can't set order date in the past")   
+                self.table["planned_orders"][i - self.bom["lead_time"]] = self.bom["batch_size"]
+                self.table["scheduled_order_admissions"][i] = self.bom["batch_size"]
+                self.table["stock_prediction"][i] = self.table["stock_prediction"][i] + self.table["scheduled_order_admissions"][i]
 
     def is_parent_ghp(self, parent):
-        if "produkcja" in parent.tabela:
+        if "production" in parent.table:
             return True
         else:
             return False

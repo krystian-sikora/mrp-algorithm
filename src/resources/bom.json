@@ -1,36 +1,36 @@
 {
-    "dron" : {
-        "czas_realizacji": 1,
-        "dostępne": 5,
-        "kadłub" : {
-            "ilość": 1,
-            "czas_realizacji": 2,
-            "wielkość_partii": 20,
-            "dostępne": 3,
-            "bateria": {
-                "ilość": 2,
-                "czas_realizacji": 2,
-                "wielkość_partii": 30,
-                "dostępne": 22
+    "drone" : {
+        "lead_time": 1,
+        "available": 5,
+        "body" : {
+            "quantity": 1,
+            "lead_time": 2,
+            "batch_size": 20,
+            "available": 3,
+            "battery": {
+                "quantity": 2,
+                "lead_time": 2,
+                "batch_size": 30,
+                "available": 22
             },
-            "silnik": {
-                "ilość": 1,
-                "czas_realizacji": 1,
-                "wielkość_partii": 20,
-                "dostępne": 3
+            "motor": {
+                "quantity": 1,
+                "lead_time": 1,
+                "batch_size": 20,
+                "available": 3
             },
-            "obudowa": {
-                "ilość": 1,
-                "czas_realizacji": 2,
-                "wielkość_partii": 40,
-                "dostępne": 22
+            "case": {
+                "quantity": 1,
+                "lead_time": 2,
+                "batch_size": 40,
+                "available": 22
             }
         },
-        "śmigła": {
-            "ilość": 4,
-            "czas_realizacji": 1,
-            "wielkość_partii": 50,
-            "dostępne": 30
+        "propellers": {
+            "quantity": 4,
+            "lead_time": 1,
+            "batch_size": 50,
+            "available": 30
         }
     }
 }

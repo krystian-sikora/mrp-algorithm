@@ -1,30 +1,31 @@
-class Ghp:
+# Master Production Schedule (MPS) class
+class Mps:
     def __init__(self, bom):
         self.bom = bom
-        self.tabela = {
-            "tydzień" : [x for x in range(1,10)],
-            "dostępne" : [0 for x in range(1,10)],
-            "przewidywany_popyt" : [0, 0, 0, 0, 0, 0, 10, 0, 20],
-            "produkcja" : [0 for x in range(1,10)]
+        self.table = {
+            "week" : [x for x in range(1,10)],
+            "available" : [0 for x in range(1,10)],
+            "anticipated_demand" : [0, 0, 0, 0, 0, 0, 10, 0, 20],
+            "production" : [0 for x in range(1,10)]
         }
-        self.oblicz_ghp()
+        self.calculate_ghp()
 
-    def oblicz_ghp(self):
-        # początkowy stan magazynu z założeniem braku popytu
-        self.tabela["dostępne"][0] = self.bom["dostępne"] 
+    def calculate_ghp(self):
+        # initial available stock is equal to the available stock from the bom
+        self.table["available"][0] = self.bom["available"] 
 
-        self.oblicz_dostepność()
-        self.oblicz_produkcje()
+        self.calculate_available()
+        self.calculate_production()
  
 
-    def oblicz_dostepność(self, i=1):
+    def calculate_available(self, i=1):
         for i in range(i, 9):
-            self.tabela["dostępne"][i] = self.tabela["dostępne"][i-1] - self.tabela["przewidywany_popyt"][i] + self.tabela["produkcja"][i]
+            self.table["available"][i] = self.table["available"][i-1] - self.table["anticipated_demand"][i] + self.table["production"][i]
 
-    def oblicz_produkcje(self):
+    def calculate_production(self):
         for i in range(1, 9):
-            if self.tabela["dostępne"][i] < 0:
-                self.tabela["produkcja"][i] = abs(self.tabela["dostępne"][i])
-                self.tabela["dostępne"][i] = 0
-                self.oblicz_dostepność(i)
+            if self.table["available"][i] < 0:
+                self.table["production"][i] = abs(self.table["available"][i])
+                self.table["available"][i] = 0
+                self.calculate_available(i)
 
