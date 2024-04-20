@@ -1,11 +1,11 @@
 # Master Production Schedule (MPS) class
 class Mps:
-    def __init__(self, bom):
+    def __init__(self, bom, demand):
         self.bom = bom
         self.table = {
             "week" : [x for x in range(1,10)],
             "available" : [0 for x in range(1,10)],
-            "anticipated_demand" : [0, 0, 0, 0, 0, 0, 10, 0, 20],
+            "anticipated_demand" : demand,
             "production" : [0 for x in range(1,10)]
         }
         self.calculate_ghp()
