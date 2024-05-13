@@ -44,7 +44,7 @@ def create_table(component):
 
 def create_menu():
     for component in component_instances:
-        tk.Button(menu_frame, text=f"{component}", command=partial(create_table, component)).pack()
+        tk.Button(menu_frame, width=20, text=f"{component}", command=partial(create_table, component)).pack()
     
 def submit():
     for i in range(0, 9):
@@ -55,7 +55,7 @@ def submit():
 
 def set_labels():
     for number in range(1, 10):
-        entry = tk.Entry(demand_frame)
+        entry = tk.Entry(demand_frame, width=5)
         tk.Label(demand_frame, text="Week").grid(row=1, column=0)
         tk.Label(demand_frame, text=f"{number}").grid(row=1, column=number + 1)
         tk.Label(demand_frame, text="Demand").grid(row=2, column=0)
